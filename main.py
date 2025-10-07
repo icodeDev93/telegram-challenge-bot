@@ -7,7 +7,7 @@ from datetime import datetime
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 SHEET_ID = os.getenv("SHEET_ID")
-CREDS = os.getenv("GOOGLE_CREDS")
+CREDS = os.getenv("GOOGLE_CREDS_JSON")
 FOLDER_ID = os.getenv("FOLDER_ID")
 
 bot = telebot.TeleBot(TOKEN)

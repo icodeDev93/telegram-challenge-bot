@@ -2,10 +2,10 @@ import os
 from flask import Flask, request, abort
 
 creds_json_env = os.environ.get("GOOGLE_CREDS_JSON")
-if creds_json_env:
-    tmp_path = "/tmp/service_account.json"
-    with open(tmp_path, "w") as f:
-        f.write(creds_json_env)
+#if creds_json_env:
+#    tmp_path = "/tmp/service_account.json"
+#    with open(tmp_path, "w") as f:
+#        f.write(creds_json_env)
     os.environ["GOOGLE_CREDS"] = tmp_path
 
 # Now import main after setting the env var

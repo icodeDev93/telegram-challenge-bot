@@ -5,6 +5,7 @@ from googleapiclient.http import MediaIoBaseUpload
 from datetime import datetime
 import io
 import requests
+import json
 
 SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -13,7 +14,8 @@ SCOPES = [
 
 class SheetsClient:
     def __init__(self, sheet_id, creds_path, folder_id):
-        creds = Credentials.from_service_account_file(creds_path, scopes=SCOPES)
+	creds_dict = json.loads(creds_json)
+        creds = Credentials.from_service_account_file(creds_dict, scopes=SCOPES)
         self.gc = gspread.authorize(creds)
         self.sheet = self.gc.open_by_key(sheet_id)
         self.drive_service = build("drive", "v3", credentials=creds)
