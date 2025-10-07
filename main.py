@@ -13,7 +13,14 @@ FOLDER_ID = os.getenv("FOLDER_ID")
 bot = telebot.TeleBot(TOKEN)
 
 # match new SheetsClient signature
-sheets = SheetsClient(SHEET_ID, CREDS, FOLDER_ID)
+# sheets = SheetsClient(SHEET_ID, CREDS, FOLDER_ID)
+
+# Initialize SheetsClient with error handling
+try:
+    sheets = SheetsClient(SHEET_ID, CREDS, FOLDER_ID)
+except Exception as e:
+    print(f"Failed to initialize SheetsClient: {e}")
+    raise  # Re-raise for debugging; consider handling gracefully in production
 
 # in-memory per-user state to store current_week for user session
 user_state = {}  # user_id -> {'week_number': int, 'awaiting_photo': bool}
