@@ -116,18 +116,6 @@ def do_exit(message):
     # send a link to your channel or use a channel username
     bot.send_message(message.chat.id, "https://t.me/deepfunding")
 
-'''
 if __name__ == "__main__":
     print("Bot running (polling). Press Ctrl-C to stop.")
-    bot.polling(non_stop=True)
-'''
-
-
-def run_polling():
-    print("Starting local polling (development).")
-    bot.polling(non_stop=True)
-
-if __name__ == "__main__":
-    # start polling only when run directly and when RUN_MODE != "webhook"
-    if os.getenv("RUN_MODE", "poll").lower() == "poll":
-        run_polling()
+    #bot.polling(non_stop=True)
