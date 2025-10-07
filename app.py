@@ -1,7 +1,5 @@
 import os
-import main
 from flask import Flask, request, abort
-
 
 creds_json_env = os.environ.get("GOOGLE_CREDS_JSON")
 if creds_json_env:
@@ -10,21 +8,11 @@ if creds_json_env:
         f.write(creds_json_env)
     os.environ["GOOGLE_CREDS"] = tmp_path
 
-
+# Now import main after setting the env var
+import main
 from telebot import types as _types
 
 app = Flask(__name__)
-
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")
-if WEBHOOK_URL:
-   try:
-      main.bot.remove_webhook()
-      main.bot.set_webhook()
-      app.logger.info(f"Webhook se to {WEBHOOK_URL}")
-   except Exception as e:
-      app.logger.error(f"Faiiled to set webhook: {e}")
-else:
-      app.logger.error(f"WEBHOOK_URL not set, webhook not configured")
 
 @app.route("/", methods=["GET"])
 def index():
