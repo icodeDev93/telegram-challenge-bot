@@ -22,6 +22,21 @@ def index():
 # Optional: secret token in path to make URL unguessable
 WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET")  # e.g. a random string you set in Cloud Run env
 
+_main = None
+
+def get_main():
+    global _main
+    if _main is None:
+        try:
+            import main as _m
+            _main = _m
+            app.logger.info("Imported main module successfully.")
+        except Exception as e:
+            app.logger.exception("Failed to import main module: %s", e)
+            # re-raise so handler can log and return 200 to avoid infinite Telegram retries
+            raise
+    return _main
+
 def _valid_path():
     # returns True if a secret is required and the request path includes it
     if not WEBHOOK_SECRET:
