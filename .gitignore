@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+.env
+credentials/
+__pycache__/
+*.pyc
+venv/
+uploads/
+*.log
+Lib/
