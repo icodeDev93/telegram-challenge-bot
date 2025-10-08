@@ -13,9 +13,9 @@ SCOPES = [
 ]
 
 class SheetsClient:
-    def __init__(self, sheet_id, creds_path, folder_id):
-	creds_dict = json.loads(creds_json)
-        creds = Credentials.from_service_account_file(creds_dict, scopes=SCOPES)
+    def __init__(self, sheet_id, creds_json, folder_id):
+        creds_dict = json.loads(creds_json)  # Parse JSON string from environment variable
+        creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)  # Use JSON dict directly
         self.gc = gspread.authorize(creds)
         self.sheet = self.gc.open_by_key(sheet_id)
         self.drive_service = build("drive", "v3", credentials=creds)
@@ -32,7 +32,6 @@ class SheetsClient:
         Upload bytes to Drive (under self.folder_id), make file 'anyone with link' reader,
         and return a browser-friendly view URL.
         """
-        from googleapiclient.http import MediaIoBaseUpload
         import io, time
 
         # Prepare media and metadata
@@ -71,7 +70,6 @@ class SheetsClient:
 
         # Fallback: construct view URL from file id
         return f"https://drive.google.com/file/d/{file_id}/view"
-
 
     # insert a submission into Main sheet
     def insert_main_submission(self, user_id, username, week_number, answer, score=""):
